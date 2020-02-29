@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Login</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <link rel="stylesheet" th:href="@{/jquery/jquery-1.11.3.min.js}"/>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <link rel="stylesheet" th:href="@{/bootstrap/js/bootstrap.min.js}"/>
+
+
+</head>
+<body th:style="'background-image: url('+@{/images/login-background.jpg}+')'">
+<div class="container" id="login-container">
+    <form>
+        <div id="portrait-container">
+        <img th:src="@{/images/portrait1.jpg}" class="img-thumbnail" id="portrait">
+        </div>
+        <div class="form-group">
+            <input class="form-control" id="username" placeholder="请输入用户名">
+        </div>
+        <br/>
+        <div class="form-group">
+            <input type="password" class="form-control" id="password" placeholder="请输入密码">
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary" style="width: 100px">登录</button>
+        <button type="submit" class="btn btn-primary" style="float:right;width: 100px">注册</button>
+    </form>
+</div>
+
+<style>
+    body{
+        background-size: 100%;
+        background-repeat:no-repeat;
+    }
+    #login-container{
+        margin-top:140px;
+        width: 20%;
+    }
+    #portrait-container{
+        text-align: center;
+    }
+    #portrait{
+        width: 130px;
+        height: 130px;
+        margin-bottom: 50px;
+    }
+</style>
+</body>
+</html>

@@ -1,0 +1,15 @@
+server:
+  port: 80
+  servlet:
+    context-path: /miniblog
+
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+    mode: LEGACYHTML5
