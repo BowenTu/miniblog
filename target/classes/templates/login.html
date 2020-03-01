@@ -1,60 +1,56 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Login</title>
+    <div th:replace="common/head :: head"></div>
 
-    <!-- Bootstrap -->
-    <!--<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
-    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
-    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-    <!--<script src="../static/jquery/jquery-1.11.3.min.js"></script>-->
-    <link rel="stylesheet" th:href="@{/jquery/jquery-1.11.3.min.js}"/>
-    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-    <!--<script src="../static/bootstrap/js/bootstrap.min.js"></script>-->
-    <link rel="stylesheet" th:href="@{/bootstrap/js/bootstrap.min.js}"/>
-
-
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+    <script type="text/javascript" th:src="@{/js/login.js}"></script>
 </head>
-<body th:style="'background-image: url('+@{/images/login-background.jpg}+')'">
-<div class="container" id="login-container">
-    <form>
-        <div id="portrait-container">
-        <img th:src="@{/images/portrait1.jpg}" class="img-thumbnail" id="portrait">
+<body>
+<div class="container">
+    <div class="login-container">
+        <div id="output"></div>
+        <div class="avatar">
+            <img class="headpic cursor-pointer" th:src="@{/pics/2.png}" alt=""
+                 width="70%" style="margin-top: 15px;">
         </div>
-        <div class="form-group">
-            <input class="form-control" id="username" placeholder="请输入用户名">
+
+        <!--登录-->
+        <div class="form-box" th:if="${page eq 0}">
+            <form th:action="@{/loginByUser}" method="post">
+                <!--以下两条语句是为了防止浏览器自动填充用户名和密码-->
+                <input type="text" style="display:none">
+                <input type="password" style="display:none">
+                <input name="username" type="text" placeholder="username" autocomplete="off">
+                <input name="password" type="password" placeholder="password" autocomplete="off">
+                <button class="btn btn-info btn-block login" type="submit">Login</button>
+                <br>
+                <a th:href="@{login(page=1)}">click to register</a>
+            </form>
         </div>
-        <br/>
-        <div class="form-group">
-            <input type="password" class="form-control" id="password" placeholder="请输入密码">
+
+        <!--注册-->
+        <div class="form-box" th:if="${page eq 1}">
+            <form th:action="@{/register}" method="post">
+                <input type="text" style="display:none">
+                <input type="password" style="display:none">
+                <input name="username" type="text" placeholder="username" autocomplete="off">
+                <input name="password" type="password" placeholder="password">
+                <input name="confirmPassword" type="password" placeholder="confirm" autocomplete="off">
+                <input name="headpic" type="text" value="4" style="display:none">
+                <button class="btn btn-info btn-block login" type="submit">Register</button>
+                <br>
+                <span th:text="${msg}"></span>
+                <br>
+                <a th:href="@{login(page=0)}">click to login</a>
+            </form>
         </div>
-        <br/>
-        <button type="submit" class="btn btn-primary" style="width: 100px">登录</button>
-        <button type="submit" class="btn btn-primary" style="float:right;width: 100px">注册</button>
-    </form>
+
+    </div>
 </div>
 
-<style>
-    body{
-        background-size: 100%;
-        background-repeat:no-repeat;
-    }
-    #login-container{
-        margin-top:140px;
-        width: 20%;
-    }
-    #portrait-container{
-        text-align: center;
-    }
-    #portrait{
-        width: 130px;
-        height: 130px;
-        margin-bottom: 50px;
-    }
-</style>
 </body>
 </html>
+
+

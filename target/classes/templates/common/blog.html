@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
+
+<th:block th:fragment="blog(blogid,portrait,userid,publishtime,content,username)">
+<div th:id="'blog-'+${blogid}" class="panel panel-default">
+    <div class="panel-body">
+        <div class="media">
+            <div class="media-left">
+                <a>
+                    <img th:src="@{'/pics/'+${portrait}}"
+                         style="width:100px;height:100px" alt="">
+                </a>
+            </div>
+            <div class="media-body">
+                <div>
+                    <a th:href="@{/user(userId=${userid})}" style="font-size: 25px">
+                        <span th:text="${username}">username</span>
+                    </a>
+                </div>
+                <div class="grey-font">
+                    <span th:text="${publishtime}">publish time</span>
+                    <c:if test="${param.isself}">
+                        <a id="delete-blog" class="cursor-pointer grey-font" blogid="${param.blogid}">delete</a>
+                    </c:if>
+                </div>
+                <div>
+                    <span th:text="${content}">content</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</th:block>
+
