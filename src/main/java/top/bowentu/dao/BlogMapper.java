@@ -9,4 +9,7 @@ import java.util.List;
 public interface BlogMapper {
     @Select("select * from blog where userid=#{userid}")
     List<Blog> findAllByUserId(Integer userid);
+
+    @Select("select * from blog where userid=(select uid from user where username=#{username})")
+    List<Blog> findAllByUserName(String username);
 }

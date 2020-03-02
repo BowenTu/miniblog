@@ -35,8 +35,7 @@ public class LoginController {
                               @RequestParam(value = "password",required = true) String password){
         ModelAndView mv = new ModelAndView();
         if(loginService.login(username,password)) {
-            mv.addObject("username", username);
-            mv.setViewName("home");
+            mv.setViewName("redirect:/home/"+username);
             return mv;
         }
         mv.setViewName("login");

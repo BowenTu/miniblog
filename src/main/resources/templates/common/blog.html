@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
 
-<th:block th:fragment="blog(blogid,portrait,userid,publishtime,content,username)">
+<th:block th:fragment="blog(blogid,userid,publishtime,content,username,portrait,uid)">
 <div th:id="'blog-'+${blogid}" class="panel panel-default">
     <div class="panel-body">
         <div class="media">
             <div class="media-left">
                 <a>
-                    <img th:src="@{'/pics/'+${portrait}}"
+                    <img th:src="@{'/pics/'+${portrait}+'.png'}"
                          style="width:100px;height:100px" alt="">
                 </a>
             </div>
@@ -19,9 +19,7 @@
                 </div>
                 <div class="grey-font">
                     <span th:text="${publishtime}">publish time</span>
-                    <c:if test="${param.isself}">
-                        <a id="delete-blog" class="cursor-pointer grey-font" blogid="${param.blogid}">delete</a>
-                    </c:if>
+                    <a id="delete-blog" class="cursor-pointer grey-font" th:if="${userid} eq ${uid}">delete</a>
                 </div>
                 <div>
                     <span th:text="${content}">content</span>
