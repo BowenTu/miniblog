@@ -1,6 +1,7 @@
 package top.bowentu.dao;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import top.bowentu.pojo.User;
@@ -8,11 +9,11 @@ import top.bowentu.pojo.User;
 @Repository
 public interface UserMapper {
     @Select("select * from user where username=#{username}")
-    User findByUserName(String username) ;
+    User findByUserName(@Param("username") String username) ;
 
     @Insert("insert into user(username,password) value(#{username},#{password})")
-    void insertUser(String username, String password);
+    void insertUser(@Param("username") String username, @Param("password") String password);
 
     @Select("select * from user where uid=#{userid}")
-    User findByUserId(Integer userid);
+    User findByUserId(@Param("userid") Integer userid);
 }

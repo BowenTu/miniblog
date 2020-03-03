@@ -35,8 +35,12 @@ public class BlogServiceImpl implements IBlogService {
     @Override
     public User findUserByUid(Integer userid) {
         User user = userDao.findByUserId(userid);
-        System.out.println(user);
         return user;
+    }
+
+    @Override
+    public void saveBlog(Integer userid, String blogContent) {
+        blogDao.saveBlog(userid,blogContent);
     }
 
 

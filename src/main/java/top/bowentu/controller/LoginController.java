@@ -39,28 +39,25 @@ public class LoginController {
             return mv;
         }
         mv.setViewName("login");
+        mv.addObject("page",0);
         mv.addObject("msg","用户名或密码错误");
         return mv;
     }
 
     @PostMapping("/register")
     public ModelAndView register(String username, String password, String confirmPassword){
-        ModelAndView mv = new ModelAndView();
-        if(!password.equals(confirmPassword)){
-            mv.setViewName("login");
-            mv.addObject("page", 1);
-            mv.addObject("msg", "两次密码输入不一致");
-            return mv;
-        }
-        if(!loginService.register(username, password)){
-            mv.setViewName("login");
-            mv.addObject("page", 1);
-            mv.addObject("msg", "用户名已存在");
-            return mv;
-        }
-        mv.setViewName("login");
+        ModelAndView mv = new ModelAndView("login");
         mv.addObject("page", 1);
-        mv.addObject("msg","注册成功");
+        if("".equals(username)||"".equals(password)){
+            mv.addObject("msg", "用户名或密码不能为空");
+        }else if(!password.equals(confirmPassword)){
+            mv.addObject("msg", "两次密码输入不一致");
+        }else if(!loginService.register(username, password)){
+            mv.addObject("msg", "用户名已存在");
+        }else{
+            mv.addObject("msg","注册成功");
+            System.out.println("新用户"+username+"已注册");
+        }
         return mv;
     }
 }

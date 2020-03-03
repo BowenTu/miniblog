@@ -22,11 +22,11 @@
                 <!--以下两条语句是为了防止浏览器自动填充用户名和密码-->
                 <input type="text" style="display:none">
                 <input type="password" style="display:none">
-                <input name="username" type="text" placeholder="username" autocomplete="off">
-                <input name="password" type="password" placeholder="password" autocomplete="off">
-                <button class="btn btn-info btn-block login" type="submit">Login</button>
+                <input name="username" type="text" placeholder="用户名" autocomplete="off">
+                <input name="password" type="password" placeholder="密码" autocomplete="off">
+                <button class="btn btn-info btn-block login" type="submit">登录</button>
                 <br>
-                <a th:href="@{login(page=1)}">click to register</a>
+                <a th:href="@{login(page=1)}">注册新用户</a>
             </form>
         </div>
 
@@ -35,15 +35,15 @@
             <form th:action="@{/register}" method="post">
                 <input type="text" style="display:none">
                 <input type="password" style="display:none">
-                <input name="username" type="text" placeholder="username" autocomplete="off">
-                <input name="password" type="password" placeholder="password">
-                <input name="confirmPassword" type="password" placeholder="confirm" autocomplete="off">
-                <input name="headpic" type="text" value="4" style="display:none">
-                <button class="btn btn-info btn-block login" type="submit">Register</button>
+                <input name="username" type="text" placeholder="用户名" autocomplete="off">
+                <input name="password" type="password" placeholder="密码">
+                <input name="confirmPassword" type="password" placeholder="再次确认密码" autocomplete="off">
+                <input name="portrait" type="text" value="4" style="display:none">
+                <button class="btn btn-info btn-block login" type="submit">注册</button>
                 <br>
                 <span th:text="${msg}"></span>
                 <br>
-                <a th:href="@{login(page=0)}">click to login</a>
+                <a th:href="@{login(page=0)}">点击返回登录</a>
             </form>
         </div>
 

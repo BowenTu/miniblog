@@ -12,7 +12,6 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public boolean login(String username, String password) {
         User user = userDao.findByUserName(username);
-        System.out.println(user);
         if(user.getPassword()!=null&&password.equals(user.getPassword())){
             return true;
         }
