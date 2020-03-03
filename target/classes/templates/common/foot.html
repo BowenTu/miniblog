@@ -1,8 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
 
-<%--将脚本文件放在页面尾部，从而加快加载速度--%>
-<script src="${pageContext.request.contextPath}/resource/js/footer.js"></script>
-<script src="${pageContext.request.contextPath}/resource/js/blog.js?v=123"></script>
+<th:block th:fragment="foot">
+<!--将脚本文件放在页面尾部，从而加快加载速度-->
+<script th:src="@{/js/footer.js}"></script>
+<script th:src="@{/js/blog.js(v=123)}"></script>
 
 <footer class="bs-docs-footer">
     <div class="container">
@@ -15,7 +17,7 @@
 </footer>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <script>
     var _hmt = _hmt || [];
     (function() {
@@ -25,4 +27,6 @@
         s.parentNode.insertBefore(hm, s);
     })();
 </script>
+
+</th:block>
 

@@ -20,8 +20,6 @@
                         <textarea name="blogContent" class="form-control rounded-0" rows="5" style="width: 100%"
                                   placeholder="写点什么吧..."></textarea>
                         <br><br>
-                        <input type="hidden" name="userid" th:value="${user.uid}">
-                        <input type="hidden" name="username" th:value="${user.username}">
                         <button type="submit" class="btn btn-default btn-sm" style="float: right;">发布</button>
                     </form>
                 </div>
@@ -37,6 +35,7 @@
         <div class="col-lg-2 col-md-2 col-xs-0"></div>
     </div>
 </div>
+<div th:replace="common/foot :: foot"></div>
 </body>
 </html>
 

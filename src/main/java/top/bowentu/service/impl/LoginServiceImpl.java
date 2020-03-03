@@ -2,6 +2,7 @@ package top.bowentu.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.bowentu.common.constant.InformMessage;
 import top.bowentu.dao.UserMapper;
 import top.bowentu.pojo.User;
 import top.bowentu.service.ILoginService;
@@ -10,9 +11,13 @@ public class LoginServiceImpl implements ILoginService {
     @Autowired
     private UserMapper userDao;
     @Override
-    public boolean login(String username, String password) {
-        User user = userDao.findByUserName(username);
-        if(user.getPassword()!=null&&password.equals(user.getPassword())){
+    public User findByUserName(String username) {
+        return userDao.findByUserName(username);
+    }
+
+    @Override
+    public boolean checkLogin(String password, User user) {
+        if(user!=null&&user.getPassword()!=null&&password.equals(user.getPassword())){
             return true;
         }
         return false;
@@ -26,5 +31,21 @@ public class LoginServiceImpl implements ILoginService {
         }
         userDao.insertUser(username,password);
         return true;
+    }
+
+    @Override
+    public String checkRegister(String username, String password, String confirmPassword) {
+        String msg;
+        if("".equals(username)||"".equals(password)){
+            msg= InformMessage.USERNAME_OR_PASSWORD_CAN_NOT_BE_NULL;
+        }else if(!password.equals(confirmPassword)){
+            msg= InformMessage.CONFIRMPASSWORD_NOT_SAME_WITH_PASSWORD;
+        }else if(!register(username, password)){
+            msg= InformMessage.USERNAME_ALREADY_EXIST;
+        }else{
+            msg= InformMessage.REGISTER_SUCCESS;
+            System.out.println("新用户"+username+"已注册");
+        }
+        return msg;
     }
 }

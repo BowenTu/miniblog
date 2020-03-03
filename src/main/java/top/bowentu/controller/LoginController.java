@@ -6,12 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import top.bowentu.common.constant.InformMessage;
+import top.bowentu.pojo.User;
 import top.bowentu.service.ILoginService;
+import top.bowentu.common.utils.SessionUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
     @Autowired
     private ILoginService loginService;
+    @Autowired
+    private HttpServletRequest request;
 
     @GetMapping("/test")
     public ModelAndView test(){
@@ -30,33 +37,34 @@ public class LoginController {
         return mv;
     }
 
-    @PostMapping("/loginByUser")
-    public ModelAndView loginByUser(@RequestParam(value = "username", required = true) String username,
-                              @RequestParam(value = "password",required = true) String password){
+    @PostMapping("/checkLogin")
+    public ModelAndView checkLogin(@RequestParam(value = "username") String username,
+                              @RequestParam(value = "password") String password){
         ModelAndView mv = new ModelAndView();
-        if(loginService.login(username,password)) {
-            mv.setViewName("redirect:/home/"+username);
-            return mv;
+        User user = loginService.findByUserName(username);
+        if(loginService.checkLogin(password, user)) {
+            SessionUtil.setUserSession(request, user);
+            mv.setViewName("redirect:/home");
+        }else{
+            mv.setViewName("login");
+            mv.addObject("page",0);
+            mv.addObject("msg", InformMessage.WRONG_USERNAME_OR_PASSWORD);
         }
-        mv.setViewName("login");
-        mv.addObject("page",0);
-        mv.addObject("msg","用户名或密码错误");
         return mv;
     }
 
     @PostMapping("/register")
     public ModelAndView register(String username, String password, String confirmPassword){
-        ModelAndView mv = new ModelAndView("login");
-        mv.addObject("page", 1);
-        if("".equals(username)||"".equals(password)){
-            mv.addObject("msg", "用户名或密码不能为空");
-        }else if(!password.equals(confirmPassword)){
-            mv.addObject("msg", "两次密码输入不一致");
-        }else if(!loginService.register(username, password)){
-            mv.addObject("msg", "用户名已存在");
+        ModelAndView mv = new ModelAndView();
+        String msg = loginService.checkRegister(username, password, confirmPassword);
+        if(InformMessage.REGISTER_SUCCESS.equals(msg)){
+            User user = loginService.findByUserName(username);
+            SessionUtil.setUserSession(request, user);
+            mv.setViewName("redirect:/home");
         }else{
-            mv.addObject("msg","注册成功");
-            System.out.println("新用户"+username+"已注册");
+            mv.setViewName("login");
+            mv.addObject("page", 1);
+            mv.addObject("msg", msg);
         }
         return mv;
     }
