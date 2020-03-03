@@ -24,8 +24,8 @@ public class Blog {
         this.userid = userid;
     }
 
-    public Timestamp getPublishtime() {
-        return publishtime;
+    public String getPublishtime() {
+        return publishtime.toString().substring(0, publishtime.toString().indexOf("."));
     }
 
     public void setPublishtime(Timestamp publishtime) {

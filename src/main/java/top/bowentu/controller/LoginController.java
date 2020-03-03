@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import top.bowentu.common.constant.InformMessage;
+import top.bowentu.pojo.Blog;
 import top.bowentu.pojo.User;
+import top.bowentu.service.IBlogService;
 import top.bowentu.service.ILoginService;
 import top.bowentu.common.utils.SessionUtil;
+import top.bowentu.service.IUserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -19,6 +23,10 @@ public class LoginController {
     private ILoginService loginService;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private IBlogService blogService;
+    @Autowired
+    private IUserService userService;
 
     @GetMapping("/test")
     public ModelAndView test(){
@@ -41,7 +49,7 @@ public class LoginController {
     public ModelAndView checkLogin(@RequestParam(value = "username") String username,
                               @RequestParam(value = "password") String password){
         ModelAndView mv = new ModelAndView();
-        User user = loginService.findByUserName(username);
+        User user = userService.findByUserName(username);
         if(loginService.checkLogin(password, user)) {
             SessionUtil.setUserSession(request, user);
             mv.setViewName("redirect:/home");
@@ -58,7 +66,7 @@ public class LoginController {
         ModelAndView mv = new ModelAndView();
         String msg = loginService.checkRegister(username, password, confirmPassword);
         if(InformMessage.REGISTER_SUCCESS.equals(msg)){
-            User user = loginService.findByUserName(username);
+            User user = userService.findByUserName(username);
             SessionUtil.setUserSession(request, user);
             mv.setViewName("redirect:/home");
         }else{
@@ -68,4 +76,22 @@ public class LoginController {
         }
         return mv;
     }
+
+    @GetMapping("/logout")
+    public String logout(){
+        SessionUtil.removeUserSession(request);
+        return "redirect:/login";
+    }
+
+    @GetMapping("/home")
+    public ModelAndView visitHome(){
+        ModelAndView mv = new ModelAndView();
+        User user = SessionUtil.getUserSession(request);
+        List<Blog> blogs = blogService.getBlogListByUserId(user.getUid());
+        mv.addObject("blogs", blogs);
+        mv.addObject("user", user);
+        mv.setViewName("home");
+        return mv;
+    }
+
 }

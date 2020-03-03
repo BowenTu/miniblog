@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>User Center</title>
+    <div th:replace="common/head :: head"></div>
+</head>
+<body>
+
+<div th:replace="common/navbar :: navbar(userid=${user.uid})"></div>
+<link th:href="@{/css/home.css}" rel="stylesheet">
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-xs-0"></div>
+        <div class="col-lg-8 col-md-8 col-xs-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body" align="center">
+
+                    <img th:src="@{'/pics/'+${selectedUser.portrait}+'.png'}"
+                         style="width: 150px;height:150px" alt="">
+                    <br>
+                     <p style="font-size: 18px" th:text="${selectedUser.username} "></p>
+                    <div th:if="${follow}">
+                        <a th:href="@{/follow(userId=${selectedUser.uid})}">Follow</a>
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
+                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=0)}">Blog</a>
+                        </div>
+                        <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
+                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=1)}">Followers</a>
+                        </div>
+                        <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
+                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=2)}">Followings</a>
+                        </div>
+                        <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
+                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=3)}">All</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div th:if="${page eq 0}">
+                    <div th:each="blog:${blogs}">
+                        <div th:replace="common/blog :: blog(blogid=${blog.blogid},userid=${blog.userid},
+                        publishtime=${blog.publishtime},content=${blog.content},username=${selectedUser.username},
+                        portrait=${selectedUser.portrait}, uid=${selectedUser.uid})"></div>
+                    </div>
+                </div>
+
+                <div th:if="${page eq 1}||${page eq 2}">
+                    <c:forEach var="f" items="${follows}">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div align="center">
+                                    <img src="${pageContext.request.contextPath}/resource/pics/${f.headpic}.png"
+                                         style="width: 80px;height:80px" alt=""><br>
+                                    <a href="user.html?userId=${f.userid}" style="font-size: 18px">${f.username}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+
+                <!--<c:if test="${page==3}">-->
+                    <!--<c:forEach var="f" items="${all}">-->
+                        <!--<div class="panel panel-default">-->
+                            <!--<div class="panel-body">-->
+                                <!--<div align="center">-->
+                                    <!--<img th:src="@{'/pics/'+${f.headpic}+'.png'}"-->
+                                         <!--style="width: 80px;height:80px" alt=""><br>-->
+                                    <!--<a href="user.html?userId=${f.userid}" style="font-size: 18px">${f.username}</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</c:forEach>-->
+                <!--</c:if>-->
+
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-0"></div>
+    </div>
+</div>
+
+<div th:replace="common/foot :: foot"></div>
+
+</body>
+</html>
+

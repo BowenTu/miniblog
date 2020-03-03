@@ -6,30 +6,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import top.bowentu.common.constant.InformMessage;
 import top.bowentu.common.utils.SessionUtil;
-import top.bowentu.pojo.Blog;
 import top.bowentu.pojo.User;
 import top.bowentu.service.IBlogService;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
-public class HomeController {
+public class BlogController {
     @Autowired
     private IBlogService blogService;
     @Autowired
     private HttpServletRequest request;
-
-    @GetMapping("/home")
-    public ModelAndView visitHome(){
-        ModelAndView mv = new ModelAndView();
-        User user = SessionUtil.getUserSession(request);
-        List<Blog> blogs = blogService.getBlogListByUserId(user.getUid());
-        mv.addObject("blogs", blogs);
-        mv.addObject("user", user);
-        mv.setViewName("home");
-        return mv;
-    }
 
     @PostMapping("/publishBlog")
     public ModelAndView publishBlog(@RequestParam("blogContent") String blogContent){

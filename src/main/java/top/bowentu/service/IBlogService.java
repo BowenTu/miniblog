@@ -10,9 +10,5 @@ public interface IBlogService {
 
     List<Blog> getBlogListByUserName(String username);
 
-    User findUserByUserName(String username);
-
-    User findUserByUid(Integer userid);
-
     void saveBlog(Integer userid, String blogContent);
 }

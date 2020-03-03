@@ -10,10 +10,6 @@ import top.bowentu.service.ILoginService;
 public class LoginServiceImpl implements ILoginService {
     @Autowired
     private UserMapper userDao;
-    @Override
-    public User findByUserName(String username) {
-        return userDao.findByUserName(username);
-    }
 
     @Override
     public boolean checkLogin(String password, User user) {

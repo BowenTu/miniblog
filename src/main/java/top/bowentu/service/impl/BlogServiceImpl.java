@@ -14,8 +14,6 @@ import java.util.List;
 public class BlogServiceImpl implements IBlogService {
     @Autowired
     private BlogMapper blogDao;
-    @Autowired
-    private UserMapper userDao;
 
     @Override
     public List<Blog> getBlogListByUserId(Integer userid) {
@@ -25,17 +23,6 @@ public class BlogServiceImpl implements IBlogService {
     @Override
     public List<Blog> getBlogListByUserName(String username) {
         return blogDao.findAllByUserName(username);
-    }
-
-    @Override
-    public User findUserByUserName(String username) {
-        return userDao.findByUserName(username);
-    }
-
-    @Override
-    public User findUserByUid(Integer userid) {
-        User user = userDao.findByUserId(userid);
-        return user;
     }
 
     @Override

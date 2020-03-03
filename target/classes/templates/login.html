@@ -26,9 +26,13 @@
                 <input name="password" type="password" placeholder="密码" autocomplete="off">
                 <button class="btn btn-info btn-block login" type="submit">登录</button>
                 <br>
-                <span th:text="${msg}">error</span>
-                <br>
                 <a th:href="@{login(page=1)}">注册新用户</a>
+                <br>
+                <div th:if="${msg}" class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <span th:text="${msg}">error</span>
+                </div>
             </form>
         </div>
 
@@ -51,7 +55,7 @@
 
     </div>
 </div>
-
+<div th:replace="common/foot :: foot"></div>
 </body>
 </html>
 
