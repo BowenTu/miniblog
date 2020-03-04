@@ -22,7 +22,7 @@
                     <br>
                      <p style="font-size: 18px" th:text="${selectedUser.username} "></p>
                     <div th:if="${follow}">
-                        <a th:href="@{/follow(userId=${selectedUser.uid})}">Follow</a>
+                        <a th:href="@{/follow(userId=${selectedUser.uid})}">关注</a>
                     </div>
                     <br>
                 </div>
@@ -32,22 +32,21 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
-                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=0)}">Blog</a>
+                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=0)}">我</a>
                         </div>
                         <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
-                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=1)}">Followers</a>
+                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=1)}">粉丝</a>
                         </div>
                         <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
-                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=2)}">Followings</a>
+                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=2)}">关注</a>
                         </div>
                         <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
-                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=3)}">All</a>
+                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=3)}">所有用户</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div>
                 <div th:if="${page eq 0}">
                     <div th:each="blog:${blogs}">
                         <div th:replace="common/blog :: blog(blogid=${blog.blogid},userid=${blog.userid},
@@ -57,17 +56,17 @@
                 </div>
 
                 <div th:if="${page eq 1}||${page eq 2}">
-                    <c:forEach var="f" items="${follows}">
+                    <div th:each="f:${follows}">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div align="center">
-                                    <img src="${pageContext.request.contextPath}/resource/pics/${f.headpic}.png"
+                                    <img th:src="@{'/pics/'+${f.portrait}+'.png'}"
                                          style="width: 80px;height:80px" alt=""><br>
-                                    <a href="user.html?userId=${f.userid}" style="font-size: 18px">${f.username}</a>
+                                    <a th:href="@{user(userId=${f.userid})}" th:text="${user.username}" style="font-size: 18px">用户名</a>
                                 </div>
                             </div>
                         </div>
-                    </c:forEach>
+                    </div>
                 </div>
 
                 <!--<c:if test="${page==3}">-->
@@ -84,7 +83,6 @@
                     <!--</c:forEach>-->
                 <!--</c:if>-->
 
-            </div>
         </div>
         <div class="col-lg-2 col-md-2 col-xs-0"></div>
     </div>
