@@ -7,7 +7,7 @@ public class BlogDetail {
 
     private Integer userid;
 
-    private Timestamp publishtime;
+    private String publishtime;
 
     private String content;
 
@@ -32,10 +32,10 @@ public class BlogDetail {
     }
 
     public String getPublishtime() {
-        return publishtime.toString().substring(0, publishtime.toString().indexOf("."));
+        return publishtime;
     }
 
-    public void setPublishtime(Timestamp publishtime) {
+    public void setPublishtime(String publishtime) {
         this.publishtime = publishtime;
     }
 

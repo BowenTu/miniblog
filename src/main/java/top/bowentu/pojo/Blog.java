@@ -28,8 +28,8 @@ public class Blog {
         return publishtime.toString().substring(0, publishtime.toString().indexOf("."));
     }
 
-    public void setPublishtime(Timestamp publishtime) {
-        this.publishtime = publishtime;
+    public void setPublishtime(String publishtime) {
+        this.publishtime = Timestamp.valueOf(publishtime);
     }
 
     public String getContent() {

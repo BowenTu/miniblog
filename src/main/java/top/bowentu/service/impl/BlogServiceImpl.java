@@ -2,19 +2,28 @@ package top.bowentu.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.bowentu.dao.BlogMapper;
-import top.bowentu.dao.UserMapper;
+import top.bowentu.dao.*;
 import top.bowentu.pojo.Blog;
 import top.bowentu.pojo.BlogDetail;
 import top.bowentu.pojo.User;
 import top.bowentu.service.IBlogService;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BlogServiceImpl implements IBlogService {
     @Autowired
     private BlogMapper blogDao;
+    @Autowired
+    private UserTimeLineDao userTimeLineDao;
+    @Autowired
+    private UserRelationDao userRelationDao;
+    @Autowired
+    private BlogCacheDao blogCacheDao;
+    @Autowired
+    private UserMapper userDao;
 
     @Override
     public List<Blog> getBlogListByUserId(Integer userid) {
@@ -33,7 +42,18 @@ public class BlogServiceImpl implements IBlogService {
 
     @Override
     public void saveBlog(Integer userid, String blogContent) {
-        blogDao.saveBlog(userid,blogContent);
+        Blog blog = new Blog();
+        blog.setUserid(userid);
+        blog.setContent(blogContent);
+        blog.setPublishtime(getCurrentTime());
+        blogDao.saveBlog(blog);
+        blogCacheDao.addBlog(blog);
+        userTimeLineDao.add(userid,blog.getBlogid());
+    }
+
+    private String getCurrentTime() {
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        return time.toString().substring(0, time.toString().indexOf("."));
     }
 
     @Override
@@ -41,5 +61,27 @@ public class BlogServiceImpl implements IBlogService {
         return blogDao.getBlogDetailListAccordToTime();
     }
 
+    @Override
+    public List<BlogDetail> getFollowingBlogDetail(Integer uid) {
+        List<Integer> blogIds = userTimeLineDao.get(uid, userRelationDao.getFollowingIds(uid));
+        List<BlogDetail> blogDetailList = new ArrayList<>();
+        for(Integer blogid:blogIds){
+            Blog blog = blogCacheDao.getBlog(blogid);
+            BlogDetail blogDetail = blog2Detail(blog);
+            blogDetailList.add(blogDetail);
+        }
+        return blogDetailList;
+    }
 
+    private BlogDetail blog2Detail(Blog blog) {
+        User user = userDao.findByUserId(blog.getUserid());
+        BlogDetail blogDetail = new BlogDetail();
+        blogDetail.setBlogid(blog.getBlogid());
+        blogDetail.setUserid(blog.getUserid());
+        blogDetail.setContent(blog.getContent());
+        blogDetail.setPublishtime(blog.getPublishtime());
+        blogDetail.setUsername(user.getUsername());
+        blogDetail.setPortrait(user.getPortrait());
+        return blogDetail;
+    }
 }
