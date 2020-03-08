@@ -26,9 +26,9 @@
             </div>
 
             <!--微博列表-->
-            <div th:each="blog:${blogs}">
-                <div th:replace="common/blog :: blog(blogid=${blog.blogid},userid=${blog.userid},publishtime=${blog.publishtime},
-                content=${blog.content},username=${user.username},portrait=${user.portrait}, uid=${user.uid})"></div>
+            <div th:each="blog:${blogDetails}">
+                <div th:replace="common/blog :: blog(blogid=${blog.blogid},theUserid=${blog.userid},publishtime=${blog.publishtime},
+                content=${blog.content},theUsername=${blog.username},thePortrait=${blog.portrait}, userid=${user.uid})"></div>
             </div>
 
         </div>

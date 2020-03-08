@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import top.bowentu.pojo.User;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
     @Select("select * from user where username=#{username}")
@@ -16,4 +18,10 @@ public interface UserMapper {
 
     @Select("select * from user where uid=#{userid}")
     User findByUserId(@Param("userid") Integer userid);
+
+    @Select("select * from user")
+    List<User> findAll();
+
+    @Select("select count(uid) from user")
+    Integer getUserNum();
 }

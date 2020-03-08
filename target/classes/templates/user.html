@@ -17,12 +17,15 @@
             <div class="panel panel-default">
                 <div class="panel-body" align="center">
 
-                    <img th:src="@{'/pics/'+${selectedUser.portrait}+'.png'}"
+                    <img th:src="@{'/pics/'+${theUser.portrait}+'.png'}"
                          style="width: 150px;height:150px" alt="">
                     <br>
-                     <p style="font-size: 18px" th:text="${selectedUser.username} "></p>
-                    <div th:if="${follow}">
-                        <a th:href="@{/follow(userId=${selectedUser.uid})}">Follow</a>
+                     <p style="font-size: 18px" th:text="${theUser.username}"></p>
+                    <div th:if="${follow eq '关注'}">
+                        <a th:href="@{/follow(userid=${theUser.uid})}" th:text="${follow}"></a>
+                    </div>
+                    <div th:if="${follow eq '取消关注'}">
+                        <a th:href="@{/delFollow(userid=${theUser.uid})}" th:text="${follow}"></a>
                     </div>
                     <br>
                 </div>
@@ -32,59 +35,56 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
-                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=0)}">Blog</a>
+                            <a th:href="@{/userPage(userid=${theUser.uid},page=0)}" th:text="'微博('+${column.blogNum}+')'">微博</a>
                         </div>
                         <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
-                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=1)}">Followers</a>
+                            <a th:href="@{/userPage(userid=${theUser.uid},page=1)}" th:text="'粉丝('+${column.followerNum}+')'">粉丝</a>
                         </div>
                         <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
-                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=2)}">Followings</a>
+                            <a th:href="@{/userPage(userid=${theUser.uid},page=2)}" th:text="'关注('+${column.followingNum}+')'">关注</a>
                         </div>
                         <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
-                            <a th:href="@{/userPage(userId=${selectedUser.uid},page=3)}">All</a>
+                            <a th:href="@{/userPage(userid=${theUser.uid},page=3)}" th:text="'所有用户('+${column.userNum}+')'">所有用户</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div>
                 <div th:if="${page eq 0}">
-                    <div th:each="blog:${blogs}">
-                        <div th:replace="common/blog :: blog(blogid=${blog.blogid},userid=${blog.userid},
-                        publishtime=${blog.publishtime},content=${blog.content},username=${selectedUser.username},
-                        portrait=${selectedUser.portrait}, uid=${selectedUser.uid})"></div>
+                    <div th:each="blog:${blogDetails}">
+                        <div th:replace="common/blog :: blog(blogid=${blog.blogid},theUserid=${blog.userid},publishtime=${blog.publishtime},
+                        content=${blog.content},theUsername=${blog.username},thePortrait=${blog.portrait}, userid=${user.uid})"></div>
                     </div>
                 </div>
 
-                <div th:if="${page eq 1}||${page eq 2}">
-                    <c:forEach var="f" items="${follows}">
+                <div th:if="${page eq 1||page eq 2}">
+                    <div th:each="f:${follows}">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div align="center">
-                                    <img src="${pageContext.request.contextPath}/resource/pics/${f.headpic}.png"
+                                    <img th:src="@{'/pics/'+${f.portrait}+'.png'}"
                                          style="width: 80px;height:80px" alt=""><br>
-                                    <a href="user.html?userId=${f.userid}" style="font-size: 18px">${f.username}</a>
+                                    <a th:href="@{user(userId=${f.uid})}" th:text="${f.username}" style="font-size: 18px">用户名</a>
                                 </div>
                             </div>
                         </div>
-                    </c:forEach>
+                    </div>
                 </div>
 
-                <!--<c:if test="${page==3}">-->
-                    <!--<c:forEach var="f" items="${all}">-->
-                        <!--<div class="panel panel-default">-->
-                            <!--<div class="panel-body">-->
-                                <!--<div align="center">-->
-                                    <!--<img th:src="@{'/pics/'+${f.headpic}+'.png'}"-->
-                                         <!--style="width: 80px;height:80px" alt=""><br>-->
-                                    <!--<a href="user.html?userId=${f.userid}" style="font-size: 18px">${f.username}</a>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</c:forEach>-->
-                <!--</c:if>-->
+                <div th:if="${page eq 3}">
+                    <div th:each="f:${allUser}">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div align="center">
+                                    <img th:src="@{'/pics/'+${f.portrait}+'.png'}"
+                                         style="width: 80px;height:80px" alt=""><br>
+                                    <a th:href="@{/userPage(userid=${f.uid})}" th:text="${f.username}" style="font-size: 18px"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>>
+                </div>
 
-            </div>
         </div>
         <div class="col-lg-2 col-md-2 col-xs-0"></div>
     </div>

@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
 
-<th:block th:fragment="blog(blogid,userid,publishtime,content,username,portrait,uid)">
+<th:block th:fragment="blog(blogid,theUserid,publishtime,content,theUsername,thePortrait,userid)">
 <div th:id="'blog-'+${blogid}" class="panel panel-default">
     <div class="panel-body">
         <div class="media">
             <div class="media-left">
                 <a>
-                    <img th:src="@{'/pics/'+${portrait}+'.png'}"
+                    <img th:src="@{'/pics/'+${thePortrait}+'.png'}"
                          style="width:100px;height:100px" alt="">
                 </a>
             </div>
             <div class="media-body">
                 <div>
-                    <a th:href="@{/userPage(userid=${userid})}" style="font-size: 25px">
-                        <span th:text="${username}">username</span>
+                    <a th:href="@{/userPage(userid=${theUserid})}" style="font-size: 25px">
+                        <span th:text="${theUsername}">username</span>
                     </a>
                 </div>
                 <div class="grey-font">
                     <span th:text="${publishtime}">publish time</span>
-                    <a id="delete-blog" class="cursor-pointer grey-font" th:if="${userid} eq ${uid}">delete</a>
+                    <a id="delete-blog" class="cursor-pointer grey-font" th:if="${theUserid} eq ${userid}">delete</a>
                 </div>
                 <div>
                     <span th:text="${content}">content</span>

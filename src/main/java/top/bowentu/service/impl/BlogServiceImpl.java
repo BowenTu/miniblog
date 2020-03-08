@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import top.bowentu.dao.BlogMapper;
 import top.bowentu.dao.UserMapper;
 import top.bowentu.pojo.Blog;
+import top.bowentu.pojo.BlogDetail;
 import top.bowentu.pojo.User;
 import top.bowentu.service.IBlogService;
 
@@ -21,6 +22,11 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
+    public List<BlogDetail> getBlogDetailListByUserId(Integer userid) {
+        return blogDao.findAllDetailByUserId(userid);
+    }
+
+    @Override
     public List<Blog> getBlogListByUserName(String username) {
         return blogDao.findAllByUserName(username);
     }
@@ -28,6 +34,11 @@ public class BlogServiceImpl implements IBlogService {
     @Override
     public void saveBlog(Integer userid, String blogContent) {
         blogDao.saveBlog(userid,blogContent);
+    }
+
+    @Override
+    public List<BlogDetail> getBlogDetailListAccordToTime() {
+        return blogDao.getBlogDetailListAccordToTime();
     }
 
 

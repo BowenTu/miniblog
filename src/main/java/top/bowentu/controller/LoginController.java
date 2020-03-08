@@ -33,7 +33,7 @@ public class LoginController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("test");
         mv.addObject("msg","success");
-        mv.addObject("n",3);
+        mv.addObject("n",0);
         return mv;
     }
 
@@ -81,17 +81,6 @@ public class LoginController {
     public String logout(){
         SessionUtil.removeUserSession(request);
         return "redirect:/login";
-    }
-
-    @GetMapping("/home")
-    public ModelAndView visitHome(){
-        ModelAndView mv = new ModelAndView();
-        User user = SessionUtil.getUserSession(request);
-        List<Blog> blogs = blogService.getBlogListByUserId(user.getUid());
-        mv.addObject("blogs", blogs);
-        mv.addObject("user", user);
-        mv.setViewName("home");
-        return mv;
     }
 
 }
