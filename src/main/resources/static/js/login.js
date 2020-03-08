@@ -45,8 +45,8 @@ $(document).ready(function ()
     function replaceHeadPic(newHeadPic)
     {
         var src = headPicImg.attr("src");
-        var reg = new RegExp("/\\d\\.png", "g");
-        src = src.replace(reg, "/" + newHeadPic + ".png");
+        var reg = new RegExp("/\\d\\.jpg", "g");
+        src = src.replace(reg, "/" + newHeadPic + ".jpg");
         headPicImg.attr("src", src);
     }
 });

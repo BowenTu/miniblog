@@ -62,15 +62,15 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public List<BlogDetail> getFollowingBlogDetail(Integer uid) {
-        List<Integer> blogIds = userTimeLineDao.get(uid, userRelationDao.getFollowingIds(uid));
-        List<BlogDetail> blogDetailList = new ArrayList<>();
-        for(Integer blogid:blogIds){
-            Blog blog = blogCacheDao.getBlog(blogid);
-            BlogDetail blogDetail = blog2Detail(blog);
-            blogDetailList.add(blogDetail);
-        }
-        return blogDetailList;
+    public List<BlogDetail> getFollowingBlogDetail(Integer userid) {
+        List<Integer> blogIds = userTimeLineDao.get(userid, userRelationDao.getFollowingIds(userid));
+        return blogIds2Details(blogIds);
+    }
+
+    @Override
+    public List<BlogDetail> getAllRecentBlogDetail() {
+        List<Integer> blogIds = userTimeLineDao.get(-1, userDao.getAllUserIds());
+        return blogIds2Details(blogIds);
     }
 
     private BlogDetail blog2Detail(Blog blog) {
@@ -83,5 +83,15 @@ public class BlogServiceImpl implements IBlogService {
         blogDetail.setUsername(user.getUsername());
         blogDetail.setPortrait(user.getPortrait());
         return blogDetail;
+    }
+
+    private List<BlogDetail> blogIds2Details(List<Integer> blogIds) {
+        List<BlogDetail> blogDetailList = new ArrayList<>();
+        for (Integer blogid : blogIds) {
+            Blog blog = blogCacheDao.getBlog(blogid);
+            BlogDetail blogDetail = blog2Detail(blog);
+            blogDetailList.add(blogDetail);
+        }
+        return blogDetailList;
     }
 }

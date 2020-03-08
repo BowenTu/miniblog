@@ -18,4 +18,6 @@ public interface IBlogService {
     List<BlogDetail> getBlogDetailListAccordToTime();
 
     List<BlogDetail> getFollowingBlogDetail(Integer uid);
+
+    List<BlogDetail> getAllRecentBlogDetail();
 }

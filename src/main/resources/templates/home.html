@@ -25,6 +25,14 @@
                 </div>
             </div>
 
+            <div class="container-fluid" id="btn-container" style="text-align: center">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a type="button" class="btn btn-default" th:href="@{/home(page=0)}">刷新动态</a>
+                    <a type="button" class="btn btn-default" th:href="@{/home(page=1)}">我的关注</a>
+                    <a type="button" class="btn btn-default" th:href="@{/userPage(userid=${user.uid})}">我的主页</a>
+                </div>
+            </div>
+
             <!--微博列表-->
             <div th:each="blog:${blogDetails}">
                 <div th:replace="common/blog :: blog(blogid=${blog.blogid},theUserid=${blog.userid},publishtime=${blog.publishtime},

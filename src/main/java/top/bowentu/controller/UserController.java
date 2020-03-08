@@ -78,18 +78,22 @@ public class UserController {
     }
 
     @GetMapping({"/home","/"})
-    public ModelAndView visitHome(){
+    public ModelAndView visitHome(@RequestParam(value = "page", defaultValue = "0")Integer page){
         ModelAndView mv = new ModelAndView();
+        List<BlogDetail> blogDetailList=null;
         User user = SessionUtil.getUserSession(request);
         if(user==null){
             mv.setViewName("redirect:/login");
-        }else{
-//            List<BlogDetail> blogDetailList = blogService.getBlogDetailListAccordToTime();
-            List<BlogDetail> blogDetailList = blogService.getFollowingBlogDetail(user.getUid());
-            mv.addObject("blogDetails", blogDetailList);
-            mv.addObject("user", user);
-            mv.setViewName("home");
+            return mv;
         }
+        if(page==0){
+            blogDetailList = blogService.getAllRecentBlogDetail();
+        }else{
+            blogDetailList = blogService.getFollowingBlogDetail(user.getUid());
+        }
+        mv.addObject("blogDetails", blogDetailList);
+        mv.addObject("user", user);
+        mv.setViewName("home");
         return mv;
     }
 }

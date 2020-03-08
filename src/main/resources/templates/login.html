@@ -9,11 +9,15 @@
 </head>
 <body>
 <div class="container">
-    <div class="login-container">
+    <div style="text-align: center"><img th:src="@{/pics/logo.png}" style="width: 30%;margin-top: 20px"/></div>
+
+    <div class="login-container" style="display: block;
+            border-left: 8px solid #337ab7;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid lightblue;">
         <div id="output"></div>
         <div class="avatar">
-            <img class="headpic cursor-pointer" th:src="@{/pics/0.png}" alt=""
-                 width="70%" style="margin-top: 15px;">
+            <img th:src="@{/pics/0.jpg}" alt="..." class="img-thumbnail"/>
         </div>
 
         <!--登录-->

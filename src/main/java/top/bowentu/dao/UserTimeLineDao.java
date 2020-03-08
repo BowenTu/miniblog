@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-
 public class UserTimeLineDao {
 
-    private final static String TIME_LINE_NAMESPACE = "time_lien:";
-    private final static String TIME_LINE_0_NAMESPACE = "time_lien_0:";
+    //负责保存用户发布过的微博
+    private final static String TIME_LINE_NAMESPACE = "time_line:";
+    //保存用户所关注的用户发布的微博汇总；其中将userid=-1即 time_line_0:-1作为所有用户的微博汇总，实现刷新动态功能
+    private final static String TIME_LINE_0_NAMESPACE = "time_line_0:";
 
     public void add(Integer userId, Integer blogId) {
         String key = buildKey(userId);
@@ -31,7 +32,7 @@ public class UserTimeLineDao {
     public List<Integer> get(Integer userId, Set<Integer> focusUserIds) {
 
         try (Jedis jedis = RedisPool.getResource()) {
-            String key0 = buildKey1(userId);
+            String key0 = buildKey0(userId);
             double lastTime = 0;
             if (jedis.zcard(key0) != 0) {
                 Set<Tuple> sets = jedis.zrangeWithScores(key0, -1, -1);
@@ -73,11 +74,12 @@ public class UserTimeLineDao {
         }
     }
 
+
     private String buildKey(Integer userId) {
         return TIME_LINE_NAMESPACE + userId;
     }
 
-    private String buildKey1(Integer userId) {
+    private String buildKey0(Integer userId) {
         return TIME_LINE_0_NAMESPACE + userId;
     }
 }

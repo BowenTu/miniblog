@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import top.bowentu.pojo.User;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface UserMapper {
@@ -24,4 +25,7 @@ public interface UserMapper {
 
     @Select("select count(uid) from user")
     Integer getUserNum();
+
+    @Select("select uid from user")
+    Set<Integer> getAllUserIds();
 }
