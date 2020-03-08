@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>User Center</title>
+    <div th:replace="common/head :: head"></div>
+</head>
+<body>
+
+<div th:replace="common/navbar :: navbar(userid=${user.uid})"></div>
+<link th:href="@{/css/home.css}" rel="stylesheet">
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-xs-0"></div>
+        <div class="col-lg-8 col-md-8 col-xs-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body" align="center">
+
+                    <img th:src="@{'/pics/'+${theUser.portrait}+'.jpg'}"
+                         style="width: 150px;height:150px" alt="">
+                    <br>
+                     <p style="font-size: 18px" th:text="${theUser.username}"></p>
+                    <div th:if="${follow eq '关注'}">
+                        <a th:href="@{/follow(userid=${theUser.uid})}" th:text="${follow}"></a>
+                    </div>
+                    <div th:if="${follow eq '取消关注'}">
+                        <a th:href="@{/delFollow(userid=${theUser.uid})}" th:text="${follow}"></a>
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
+                            <a th:href="@{/userPage(userid=${theUser.uid},page=0)}" th:text="'微博('+${column.blogNum}+')'">微博</a>
+                        </div>
+                        <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
+                            <a th:href="@{/userPage(userid=${theUser.uid},page=1)}" th:text="'粉丝('+${column.followerNum}+')'">粉丝</a>
+                        </div>
+                        <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
+                            <a th:href="@{/userPage(userid=${theUser.uid},page=2)}" th:text="'关注('+${column.followingNum}+')'">关注</a>
+                        </div>
+                        <div class="col-md-4 col-xs-4" align="center" style="width: 20%">
+                            <a th:href="@{/userPage(userid=${theUser.uid},page=3)}" th:text="'所有用户('+${column.userNum}+')'">所有用户</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div th:if="${page eq 0}">
+                    <div th:each="blog:${blogDetails}">
+                        <div th:replace="common/blog :: blog(blogid=${blog.blogid},theUserid=${blog.userid},publishtime=${blog.publishtime},
+                        content=${blog.content},theUsername=${blog.username},thePortrait=${blog.portrait}, userid=${user.uid})"></div>
+                    </div>
+                </div>
+
+                <div th:if="${page eq 1||page eq 2}">
+                    <div th:each="f:${follows}">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div align="center">
+                                    <img th:src="@{'/pics/'+${f.portrait}+'.jpg'}"
+                                         style="width: 80px;height:80px" alt=""><br>
+                                    <a th:href="@{/userPage(userid=${f.uid})}" th:text="${f.username}" style="font-size: 18px">用户名</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${page eq 3}">
+                    <div th:each="f:${allUser}">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div align="center">
+                                    <img th:src="@{'/pics/'+${f.portrait}+'.jpg'}"
+                                         style="width: 80px;height:80px" alt=""><br>
+                                    <a th:href="@{/userPage(userid=${f.uid})}" th:text="${f.username}" style="font-size: 18px"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-0"></div>
+    </div>
+</div>
+
+<div th:replace="common/foot :: foot"></div>
+
+</body>
+</html>
+

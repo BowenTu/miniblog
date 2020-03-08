@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>Home</title>
+    <div th:replace="common/head :: head"></div>
+</head>
+<body>
+<div th:replace="common/navbar :: navbar(userid=${user.uid})"></div>
+
+<link th:href="@{/css/home.css}" rel="stylesheet">
+<div class="container ">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-xs-0"></div>
+        <div class="col-lg-8 col-md-8 col-xs-12">
+
+            <!-- 发布微博 -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-inline" th:action="@{/publishBlog}" method="post">
+                        <textarea name="blogContent" class="form-control rounded-0" rows="5" style="width: 100%"
+                                  placeholder="写点什么吧..."></textarea>
+                        <br><br>
+                        <button type="submit" class="btn btn-default btn-sm" style="float: right;">发布</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="container-fluid" id="btn-container" style="text-align: center">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a type="button" class="btn btn-default" th:href="@{/home(page=0)}">刷新动态</a>
+                    <a type="button" class="btn btn-default" th:href="@{/home(page=1)}">我的关注</a>
+                    <a type="button" class="btn btn-default" th:href="@{/userPage(userid=${user.uid})}">我的主页</a>
+                </div>
+            </div>
+
+            <!--微博列表-->
+            <div th:each="blog:${blogDetails}">
+                <div th:replace="common/blog :: blog(blogid=${blog.blogid},theUserid=${blog.userid},publishtime=${blog.publishtime},
+                content=${blog.content},theUsername=${blog.username},thePortrait=${blog.portrait}, userid=${user.uid})"></div>
+            </div>
+
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-0"></div>
+    </div>
+</div>
+<div th:replace="common/foot :: foot"></div>
+</body>
+</html>
+
