@@ -57,11 +57,6 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public List<BlogDetail> getBlogDetailListAccordToTime() {
-        return blogDao.getBlogDetailListAccordToTime();
-    }
-
-    @Override
     public List<BlogDetail> getFollowingBlogDetail(Integer userid) {
         List<Integer> blogIds = userTimeLineDao.get(userid, userRelationDao.getFollowingIds(userid));
         return blogIds2Details(blogIds);
@@ -71,6 +66,12 @@ public class BlogServiceImpl implements IBlogService {
     public List<BlogDetail> getAllRecentBlogDetail() {
         List<Integer> blogIds = userTimeLineDao.get(-1, userDao.getAllUserIds());
         return blogIds2Details(blogIds);
+    }
+
+    @Override
+    public void deleteBlog(Integer uid, Integer blogId) {
+        blogDao.delByBlogId(blogId);
+        userTimeLineDao.delete(uid,blogId);
     }
 
     private BlogDetail blog2Detail(Blog blog) {

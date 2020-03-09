@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import top.bowentu.common.constant.InformMessage;
+import top.bowentu.common.utils.RedisPool;
 import top.bowentu.pojo.Blog;
 import top.bowentu.pojo.User;
 import top.bowentu.service.IBlogService;
@@ -31,6 +32,8 @@ public class LoginController {
     @GetMapping("/test")
     public ModelAndView test(){
         ModelAndView mv = new ModelAndView();
+        RedisPool.set("test","success");
+        System.out.println(RedisPool.get("test"));
         mv.setViewName("test");
         mv.addObject("msg","success");
         mv.addObject("n",0);

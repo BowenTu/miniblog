@@ -15,9 +15,9 @@ public interface IBlogService {
 
     void saveBlog(Integer userid, String blogContent);
 
-    List<BlogDetail> getBlogDetailListAccordToTime();
-
     List<BlogDetail> getFollowingBlogDetail(Integer uid);
 
     List<BlogDetail> getAllRecentBlogDetail();
+
+    void deleteBlog(Integer uid, Integer blogId);
 }

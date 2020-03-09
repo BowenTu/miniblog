@@ -29,4 +29,15 @@ public class BlogController {
         System.out.println("用户"+user.getUsername()+"发布了微博:"+blogContent);
         return mv;
     }
+
+    @RequestMapping(value = "/deleteBlog")
+    @ResponseBody
+    public String deleteBlog(Integer blogId) {
+        User user = SessionUtil.getUserSession(request);
+        if (user == null) return "error";
+        blogService.deleteBlog(user.getUid(), blogId);
+        //userid=-1表示所有用户的动态
+        blogService.deleteBlog(-1, blogId);
+        return "success";
+    }
 }

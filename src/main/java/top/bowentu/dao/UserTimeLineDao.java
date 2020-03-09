@@ -69,8 +69,10 @@ public class UserTimeLineDao {
 
     public void delete(Integer userId, Integer blogId) {
         String key = buildKey(userId);
+        String key0 = buildKey0(userId);
         try (Jedis jedis = RedisPool.getResource()) {
             jedis.zrem(key, blogId + "");
+            jedis.zrem(key0, blogId + "");
         }
     }
 

@@ -19,7 +19,7 @@
                 </div>
                 <div class="grey-font">
                     <span th:text="${publishtime}">publish time</span>
-                    <a id="delete-blog" class="cursor-pointer grey-font" th:if="${theUserid} eq ${userid}">delete</a>
+                    <a id="delete-blog" class="cursor-pointer grey-font" th:if="${theUserid} eq ${userid}" th:blogid="${blogid}" style="color: #2e6da4;padding-left: 10px;text-decoration: underline">删除</a>
                 </div>
                 <div>
                     <span th:text="${content}">content</span>
