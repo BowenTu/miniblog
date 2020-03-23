@@ -29,17 +29,6 @@ public class LoginController {
     @Autowired
     private IUserService userService;
 
-    @GetMapping("/test")
-    public ModelAndView test(){
-        ModelAndView mv = new ModelAndView();
-        RedisPool.set("test","success");
-        System.out.println(RedisPool.get("test"));
-        mv.setViewName("test");
-        mv.addObject("msg","success");
-        mv.addObject("n",0);
-        return mv;
-    }
-
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(value = "page",defaultValue = "0") Integer page) {
         ModelAndView mv = new ModelAndView();

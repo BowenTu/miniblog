@@ -7,13 +7,13 @@ import top.bowentu.pojo.User;
 import java.util.List;
 
 public interface IBlogService {
-    List<Blog> getBlogListByUserId(Integer userid);
+    List<Blog> insertBlogListByUserId(Integer userid);
 
-    List<BlogDetail> getBlogDetailListByUserId(Integer userid);
+    List<BlogDetail> findBlogDetailListByUserId(Integer userid);
 
-    List<Blog> getBlogListByUserName(String username);
+    List<Blog> findBlogListByUserName(String username);
 
-    void saveBlog(Integer userid, String blogContent);
+    void insertBlog(Integer userid, String blogContent);
 
     List<BlogDetail> getFollowingBlogDetail(Integer uid);
 

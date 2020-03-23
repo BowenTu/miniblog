@@ -26,27 +26,27 @@ public class BlogServiceImpl implements IBlogService {
     private UserMapper userDao;
 
     @Override
-    public List<Blog> getBlogListByUserId(Integer userid) {
+    public List<Blog> insertBlogListByUserId(Integer userid) {
         return blogDao.findAllByUserId(userid);
     }
 
     @Override
-    public List<BlogDetail> getBlogDetailListByUserId(Integer userid) {
+    public List<BlogDetail> findBlogDetailListByUserId(Integer userid) {
         return blogDao.findAllDetailByUserId(userid);
     }
 
     @Override
-    public List<Blog> getBlogListByUserName(String username) {
+    public List<Blog> findBlogListByUserName(String username) {
         return blogDao.findAllByUserName(username);
     }
 
     @Override
-    public void saveBlog(Integer userid, String blogContent) {
+    public void insertBlog(Integer userid, String blogContent) {
         Blog blog = new Blog();
         blog.setUserid(userid);
         blog.setContent(blogContent);
         blog.setPublishtime(getCurrentTime());
-        blogDao.saveBlog(blog);
+        blogDao.insertBlog(blog);
         blogCacheDao.addBlog(blog);
         userTimeLineDao.add(userid,blog.getBlogid());
     }
@@ -64,7 +64,7 @@ public class BlogServiceImpl implements IBlogService {
 
     @Override
     public List<BlogDetail> getAllRecentBlogDetail() {
-        List<Integer> blogIds = userTimeLineDao.get(-1, userDao.getAllUserIds());
+        List<Integer> blogIds = userTimeLineDao.get(-1, userDao.findAllUserIds());
         return blogIds2Details(blogIds);
     }
 

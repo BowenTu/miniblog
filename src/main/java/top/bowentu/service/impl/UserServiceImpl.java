@@ -73,12 +73,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ColumnCount getUserColumnCount(Integer userid) {
+    public ColumnCount findUserColumnCount(Integer userid) {
         ColumnCount cc = new ColumnCount();
-        cc.setBlogNum(blogDao.getBlogNumByUserId(userid));
+        cc.setBlogNum(blogDao.findBlogNumByUserId(userid));
         cc.setFollowerNum(userRelationDao.getFollowerNum(userid));
         cc.setFollowingNum(userRelationDao.getFollowingNum(userid));
-        cc.setUserNum(userDao.getUserNum());
+        cc.setUserNum(userDao.findUserNum());
         return cc;
     }
 }

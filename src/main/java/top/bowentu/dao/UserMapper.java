@@ -24,8 +24,8 @@ public interface UserMapper {
     List<User> findAll();
 
     @Select("select count(uid) from user")
-    Integer getUserNum();
+    Integer findUserNum();
 
     @Select("select uid from user")
-    Set<Integer> getAllUserIds();
+    Set<Integer> findAllUserIds();
 }

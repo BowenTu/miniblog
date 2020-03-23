@@ -33,7 +33,7 @@ public class UserController {
         User theUser = userService.findByUserId(theUserid);
 
         //获取用户中心各栏目的条目数
-        ColumnCount columnCount = userService.getUserColumnCount(theUserid);
+        ColumnCount columnCount = userService.findUserColumnCount(theUserid);
         mv.addObject("column", columnCount);
         // 根据情况显示关注和取消关注
         if(theUserid!=user.getUid()){
@@ -48,7 +48,7 @@ public class UserController {
         mv.addObject("page", page);
         //设置用户中心各栏目的显示
         if(page==0){
-            List<BlogDetail> blogDetailList = blogService.getBlogDetailListByUserId(theUserid);
+            List<BlogDetail> blogDetailList = blogService.findBlogDetailListByUserId(theUserid);
             mv.addObject("blogDetails", blogDetailList);
         }else if(page==1){
             Set<User> followers = userService.getFollowers(theUserid);

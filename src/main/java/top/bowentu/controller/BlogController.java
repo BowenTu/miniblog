@@ -24,7 +24,7 @@ public class BlogController {
         if("".equals(blogContent)){
             mv.addObject("msg", InformMessage.CONTENT_CAN_NOT_BE_NULL);
         }else{
-            blogService.saveBlog(user.getUid(), blogContent);
+            blogService.insertBlog(user.getUid(), blogContent);
         }
         System.out.println("用户"+user.getUsername()+"发布了微博:"+blogContent);
         return mv;

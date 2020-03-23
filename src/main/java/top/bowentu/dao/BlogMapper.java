@@ -16,13 +16,13 @@ public interface BlogMapper {
 
     @Insert("insert into blog(userid,publishtime,content) value(#{userid},#{publishtime},#{content})")
     @SelectKey(statement="select LAST_INSERT_ID()", keyProperty="blogid", before=false, resultType=Integer.class)
-    void saveBlog(Blog blog);
+    void insertBlog(Blog blog);
 
     @Select("select * from blog inner join(user) on blog.`userid`=user.`uid` where blog.`userid`=#{userid}")
     List<BlogDetail> findAllDetailByUserId(Integer userid);
 
     @Select("select count(blogid) from blog where userid=#{userid}")
-    Integer getBlogNumByUserId(Integer userid);
+    Integer findBlogNumByUserId(Integer userid);
 
     @Select("select * from blog inner join(user) on blog.`userid`=user.`uid` where blogid=#{blogid}")
     BlogDetail findDetailByBlogId(Integer blogid);

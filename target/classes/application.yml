@@ -1,7 +1,7 @@
 server:
-  port: 80
+  port: 8080
   servlet:
-    context-path: /miniblog
+    context-path: /
 
 spring:
   thymeleaf:
@@ -13,11 +13,19 @@ spring:
     servlet:
       content-type: text/html
     mode: LEGACYHTML5
+
   datasource:
-    url: jdbc:mysql://localhost:3306/miniblog
     driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: root
+    druid:
+      master:
+        url: jdbc:mysql://localhost:3306/miniblog
+        username: root
+        password: root
+      slave:
+        url: jdbc:mysql://localhost:3306/miniblog_slave
+        username: root
+        password: root
+
 mybatis:
   type-aliases-package: top.bowentu.pojo
 

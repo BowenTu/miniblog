@@ -23,5 +23,5 @@ public interface IUserService {
 
     void delFollow(Integer userid, Integer theUserid);
 
-    ColumnCount getUserColumnCount(Integer userid);
+    ColumnCount findUserColumnCount(Integer userid);
 }
