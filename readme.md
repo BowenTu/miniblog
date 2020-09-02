@@ -13,10 +13,8 @@
 
 密码：test
 
-##系统架构图
-<span>（测试用户名：test 密码：test）<span>
 <h1>系统架构图</h1>
 
 <div align="center">
-  <img src="pics/miniblog架构.jpg">
+  <img src="pics/miniblog.jpg">
 </div>
